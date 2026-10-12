@@ -1,0 +1,40 @@
+flowchart LR
+    App["App.tsx<br/>estado global · callbacks"]
+
+    subgraph layout["Layout"]
+        AppBar["AppBar<br/>título de la app"]
+    end
+
+    subgraph main["Vista principal"]
+        TaskList["TaskList<br/>listado por ICE"]
+        EmptyState["EmptyState<br/>sin tareas"]
+        TaskItem["TaskItem<br/>tarjeta × n"]
+    end
+
+    subgraph form["Formulario / Modal"]
+        TaskFormDialog["TaskFormDialog<br/>modal crear / editar"]
+        IceFields["IceFields<br/>sliders I · C · E"]
+        IceSuggestionPanel["IceSuggestionPanel<br/>sugerencia IA"]
+        IceScoreBadge["IceScoreBadge<br/>chip score calculado"]
+    end
+
+    subgraph service["Servicio externo"]
+        aiIceService["aiIceService<br/>API gratuita IA"]
+    end
+
+    App --> AppBar
+    App --> TaskList
+    App -->|"onAdd"| TaskFormDialog
+    TaskList --> EmptyState
+    TaskList --> TaskItem
+    TaskItem -->|"onComplete / onDelete"| App
+    TaskItem -->|"onEdit"| TaskFormDialog
+    TaskFormDialog --> IceFields
+    TaskFormDialog --> IceSuggestionPanel
+    TaskFormDialog --> IceScoreBadge
+    IceSuggestionPanel -->|"fetch POST"| aiIceService
+
+    style App fill:#1976D2,color:#fff,stroke:#1565C0
+    style aiIceService fill:#FF9800,color:#fff,stroke:#F57C00
+    style TaskFormDialog fill:#E3F2FD,stroke:#90CAF9
+    style IceSuggestionPanel fill:#E8EAF6,stroke:#9FA8DA
