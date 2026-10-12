@@ -384,6 +384,6 @@
 
   <!-- Leyenda de componentes -->
   <text x="750" y="620" text-anchor="middle" font-size="10" fill="#B0BEC5">
-    App.tsx · AppBar · TaskList · TaskItem · EmptyState · TaskFormDialog · IceFields · IceSuggestionPanel · IceScoreBadge · aiIceService
+    App.tsx · AppHeader · TaskList · TaskItem · EmptyState · TaskFormDialog · IceFields · IceSuggestionPanel · IceScoreBadge · aiIceService
   </text>
 </svg>
