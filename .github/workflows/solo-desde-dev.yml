@@ -1,0 +1,26 @@
+# Bloquea las PRs a main que no vengan de la rama dev de este repositorio.
+# El job es un check obligatorio en el ruleset de main.
+name: Origen de PR a main
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, reopened, synchronize]
+
+permissions: {}
+
+jobs:
+  solo-desde-dev:
+    name: solo-desde-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comprobar que la rama origen es dev
+        env:
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ "$HEAD_REPO" != "$GITHUB_REPOSITORY" ] || [ "$HEAD_REF" != "dev" ]; then
+            echo "::error::A main solo se puede mergear desde dev (origen: $HEAD_REPO:$HEAD_REF)"
+            exit 1
+          fi
+          echo "Origen correcto: dev"

@@ -19,6 +19,15 @@ npm run build          # tipos + build de producción en dist/
 - No hay tests ni script `test`. No instales Vitest ni Testing Library ni escribas tests hasta que se pida expresamente; a partir de entonces serán obligatorios.
 - Sin clave de Gemini la app funciona; solo falla la sugerencia con IA, que muestra un mensaje.
 
+## Ramas y pull requests
+
+Git flow con dos ramas fijas, protegidas en GitHub con rulesets:
+
+- `dev` es la rama por defecto y la de integración. Cada issue sale de `dev` en una rama `issue-<numero>-<descripcion-corta>`, y su PR va siempre contra `dev` con `Closes #<numero>` en la descripción.
+- `main` es la rama estable. Solo acepta PRs desde `dev` (lo comprueba el check `solo-desde-dev` de `.github/workflows/solo-desde-dev.yml`) y se mergean con merge commit.
+- Para mergear en `dev`, la PR necesita la aprobación del code owner (`.github/CODEOWNERS`), todos los hilos resueltos y ningún conflicto.
+- No hagas push directo ni force push a `dev` ni a `main`. Tampoco apruebes ni mergees PRs, ni uses `gh pr merge --admin` para saltarte las reglas: eso lo hace el propietario del repositorio.
+
 ## Arquitectura
 
 ### Capas y dependencias
