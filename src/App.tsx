@@ -6,6 +6,7 @@ import AppHeader from './components/AppHeader';
 import EmptyState from './components/EmptyState';
 import TaskFormDialog from './components/TaskFormDialog';
 import TaskList from './components/TaskList';
+import TaskSavedSnackbar from './components/TaskSavedSnackbar';
 import { useTaskManager } from './hooks/useTaskManager';
 
 import type { NewTask, Task } from './types/Task';
@@ -16,6 +17,7 @@ function App() {
     useTaskManager();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [taskBeingEdited, setTaskBeingEdited] = useState<Task | null>(null);
+  const [savedCount, setSavedCount] = useState(0);
 
   // openCreateForm abre el formulario vacio para una nueva tarea.
   function openCreateForm(): void {
@@ -43,6 +45,7 @@ function App() {
     }
 
     closeForm();
+    setSavedCount((count) => count + 1);
   }
 
   return (
@@ -78,6 +81,8 @@ function App() {
           task={taskBeingEdited}
         />
       )}
+
+      <TaskSavedSnackbar savedCount={savedCount} />
     </Box>
   );
 }

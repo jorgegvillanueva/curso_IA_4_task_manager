@@ -54,10 +54,11 @@ App.tsx (useTaskManager)          dueño de las tareas y de abrir/cerrar el form
 │               └─ TaskItem       tarjeta con completar, editar y eliminar
 │                  └─ IceScoreBadge
 ├─ Fab                            abre el formulario vacío
-└─ TaskFormDialog                 crear y editar (useTaskForm + useIceSuggestion)
-   ├─ IceSuggestionPanel          botón de IA, carga, error y resultado; solo presentación
-   ├─ IceFields                   sliders de Impacto, Confianza y Esfuerzo
-   └─ IceScoreBadge
+├─ TaskFormDialog                 crear y editar (useTaskForm + useIceSuggestion)
+│  ├─ IceSuggestionPanel          botón de IA, carga, error y resultado; solo presentación
+│  ├─ IceFields                   sliders de Impacto, Confianza y Esfuerzo
+│  └─ IceScoreBadge
+└─ TaskSavedSnackbar              aviso «Tarea guardada» tras guardar
 useIceSuggestion → aiIceService.getIceSuggestion → API de Gemini
 ```
 
@@ -114,13 +115,13 @@ useIceSuggestion → aiIceService.getIceSuggestion → API de Gemini
 - Las tareas nuevas empiezan en `pending`. El estado alterna entre `pending` y `completed`.
 - La lista se ordena por ICE de mayor a menor. Las completadas siguen en la lista, con estilo atenuado.
 - Eliminar es inmediato y no pide confirmación.
+- Al guardar se muestra el aviso «Tarea guardada» (`TaskSavedSnackbar`). Vive en `App.tsx`, porque `TaskFormDialog` se desmonta al guardar. Se cierra solo o con «OK», no con un clic fuera, y vuelve a aparecer en cada guardado.
 
 ## Requisitos sin implementar
 
 Forman parte del alcance, pero el código aún no los cumple. No los des por hechos. Cuando se implementen, pasa la regla a «Reglas de dominio» y quítala de aquí.
 
 - El chip de `IceScoreBadge` cambia de color según la prioridad: gris si la tarea está completada o faltan valores, verde si ICE ≥ 10, naranja si 5 ≤ ICE < 10 y rojo si ICE < 5. Hoy usa `primary` o gris.
-- Al guardar se muestra el aviso «Tarea guardada». Debe vivir en `App.tsx`, porque `TaskFormDialog` se desmonta al guardar.
 
 ## Fuera de alcance
 
