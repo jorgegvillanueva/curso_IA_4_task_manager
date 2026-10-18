@@ -10,13 +10,15 @@ Stack: React, TypeScript en modo `strict`, Vite y Material UI siguiendo Material
 npm install
 cp .env.example .env   # y rellena VITE_GEMINI_API_KEY
 npm run dev            # servidor de desarrollo
-npm run check          # tipos + lint + formato; debe pasar antes de dar un cambio por cerrado
+npm run check          # tipos + lint + formato + tests; debe pasar antes de dar un cambio por cerrado
+npm run test           # ejecuta los tests una vez
+npm run test:watch     # ejecuta los tests al guardar cambios
 npm run lint:fix       # corrige lo que ESLint puede arreglar solo
 npm run format         # aplica Prettier
 npm run build          # tipos + build de producción en dist/
 ```
 
-- No hay tests ni script `test`. No instales Vitest ni Testing Library ni escribas tests hasta que se pida expresamente; a partir de entonces serán obligatorios.
+- Los tests son obligatorios: cada cambio de lógica lleva sus tests con Vitest, junto al archivo que prueban. Las convenciones están en `.claude/rules/tests.md`.
 - Sin clave de Gemini la app funciona; solo falla la sugerencia con IA, que muestra un mensaje.
 
 ## Ramas y pull requests
@@ -54,10 +56,11 @@ App.tsx (useTaskManager)          dueño de las tareas y de abrir/cerrar el form
 │               └─ TaskItem       tarjeta con completar, editar y eliminar
 │                  └─ IceScoreBadge
 ├─ Fab                            abre el formulario vacío
-└─ TaskFormDialog                 crear y editar (useTaskForm + useIceSuggestion)
-   ├─ IceSuggestionPanel          botón de IA, carga, error y resultado; solo presentación
-   ├─ IceFields                   sliders de Impacto, Confianza y Esfuerzo
-   └─ IceScoreBadge
+├─ TaskFormDialog                 crear y editar (useTaskForm + useIceSuggestion)
+│  ├─ IceSuggestionPanel          botón de IA, carga, error y resultado; solo presentación
+│  ├─ IceFields                   sliders de Impacto, Confianza y Esfuerzo
+│  └─ IceScoreBadge
+└─ TaskSavedSnackbar              aviso «Tarea guardada» tras guardar
 useIceSuggestion → aiIceService.getIceSuggestion → API de Gemini
 ```
 
@@ -114,18 +117,18 @@ useIceSuggestion → aiIceService.getIceSuggestion → API de Gemini
 - Las tareas nuevas empiezan en `pending`. El estado alterna entre `pending` y `completed`.
 - La lista se ordena por ICE de mayor a menor. Las completadas siguen en la lista, con estilo atenuado.
 - Eliminar es inmediato y no pide confirmación.
+- Al guardar se muestra el aviso «Tarea guardada» (`TaskSavedSnackbar`). Vive en `App.tsx`, porque `TaskFormDialog` se desmonta al guardar. Se cierra solo o con «OK», no con un clic fuera, y vuelve a aparecer en cada guardado.
 
 ## Requisitos sin implementar
 
 Forman parte del alcance, pero el código aún no los cumple. No los des por hechos. Cuando se implementen, pasa la regla a «Reglas de dominio» y quítala de aquí.
 
 - El chip de `IceScoreBadge` cambia de color según la prioridad: gris si la tarea está completada o faltan valores, verde si ICE ≥ 10, naranja si 5 ≤ ICE < 10 y rojo si ICE < 5. Hoy usa `primary` o gris.
-- Al guardar se muestra el aviso «Tarea guardada». Debe vivir en `App.tsx`, porque `TaskFormDialog` se desmonta al guardar.
 
 ## Fuera de alcance
 
 - No añadas backend, autenticación, persistencia (las tareas se pierden al recargar; no uses `localStorage`), paginación, multiusuario, roles, etiquetas, notificaciones, fechas límite, subtareas, filtros avanzados ni sincronización entre dispositivos.
-- Los bocetos (`docs/app-screens.png` y `design/app-screens.svg`) son solo una referencia visual: si contradicen este archivo, manda este archivo. No implementes la etiqueta «NUEVA» ni los menús ☰ y ⋮ de la barra superior.
+- Los bocetos (`docs/app-screens.png`) son solo una referencia visual: si contradicen este archivo, manda este archivo. No implementes la etiqueta «NUEVA» ni los menús ☰ y ⋮ de la barra superior.
 
 ## Convenciones de código
 
@@ -148,4 +151,4 @@ Forman parte del alcance, pero el código aún no los cumple. No los des por hec
 ## Trampas conocidas
 
 - `TaskFormDialog` solo está montado mientras el formulario está abierto (`isFormOpen && …` en `App.tsx`) y su `Dialog` lleva `open` fijo. Así `useReducer` se inicializa de nuevo con la tarea elegida cada vez. No lo dejes siempre montado controlando `open`: el formulario conservaría los datos anteriores.
-- Prettier también revisa los `.md`. Después de editar documentación, ejecuta `npm run format`.
+- Prettier también revisa los `.md`. El hook `PostToolUse` de `.claude/settings.json` (`.claude/hooks/formatear.sh`) ya formatea cada archivo que editas con Edit o Write. `npm run format` solo hace falta para los archivos creados o modificados desde la terminal.
