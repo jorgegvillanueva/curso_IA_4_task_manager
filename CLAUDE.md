@@ -148,4 +148,4 @@ Forman parte del alcance, pero el código aún no los cumple. No los des por hec
 ## Trampas conocidas
 
 - `TaskFormDialog` solo está montado mientras el formulario está abierto (`isFormOpen && …` en `App.tsx`) y su `Dialog` lleva `open` fijo. Así `useReducer` se inicializa de nuevo con la tarea elegida cada vez. No lo dejes siempre montado controlando `open`: el formulario conservaría los datos anteriores.
-- Prettier también revisa los `.md`. Después de editar documentación, ejecuta `npm run format`.
+- Prettier también revisa los `.md`. El hook `PostToolUse` de `.claude/settings.json` (`.claude/hooks/formatear.sh`) ya formatea cada archivo que editas con Edit o Write. `npm run format` solo hace falta para los archivos creados o modificados desde la terminal.
