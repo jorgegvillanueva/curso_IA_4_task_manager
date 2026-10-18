@@ -8,8 +8,8 @@
       "Bash(git diff)",
       "Bash(git log)"
     ],
-    "ask": ["Bash(git push *)", "Bash(npm install *)"],
-    "deny": ["Read(./.env)", "Bash(gh pr merge *)"]
+    "deny": ["Read(./.env)", "Bash(gh pr merge *)"],
+    "ask": ["Bash(git push *)", "Bash(npm install *)"]
   },
   "hooks": {
     "PostToolUse": [
@@ -24,5 +24,8 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
   }
 }
