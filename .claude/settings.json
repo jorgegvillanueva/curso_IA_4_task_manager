@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run check)",
+      "Bash(npm run test)",
+      "Bash(npm run format)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log)"
+    ],
+    "deny": ["Read(./.env)", "Bash(gh pr merge *)"],
+    "ask": ["Bash(git push *)", "Bash(npm install *)"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/formatear.sh",
+            "args": []
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  }
+}
