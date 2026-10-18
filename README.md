@@ -33,4 +33,3 @@ La clave de Gemini queda incluida en el JavaScript compilado: no publiques esa v
 
 - `docs/app-screens.png`: bocetos de las pantallas.
 - `design/app-screens.svg`: los mismos bocetos en formato SVG.
-- `archivos-arnes-claude-code.docx`: guía del curso sobre los archivos de configuración de Claude Code.
