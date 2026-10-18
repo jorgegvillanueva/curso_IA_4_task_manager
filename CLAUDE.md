@@ -128,7 +128,7 @@ Forman parte del alcance, pero el código aún no los cumple. No los des por hec
 ## Fuera de alcance
 
 - No añadas backend, autenticación, persistencia (las tareas se pierden al recargar; no uses `localStorage`), paginación, multiusuario, roles, etiquetas, notificaciones, fechas límite, subtareas, filtros avanzados ni sincronización entre dispositivos.
-- Los bocetos (`docs/app-screens.png` y `design/app-screens.svg`) son solo una referencia visual: si contradicen este archivo, manda este archivo. No implementes la etiqueta «NUEVA» ni los menús ☰ y ⋮ de la barra superior.
+- Los bocetos (`docs/app-screens.png`) son solo una referencia visual: si contradicen este archivo, manda este archivo. No implementes la etiqueta «NUEVA» ni los menús ☰ y ⋮ de la barra superior.
 
 ## Convenciones de código
 

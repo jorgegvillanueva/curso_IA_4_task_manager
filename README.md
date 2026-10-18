@@ -36,4 +36,3 @@ La clave de Gemini queda incluida en el JavaScript compilado: no publiques esa v
 ## Documentación
 
 - `docs/app-screens.png`: bocetos de las pantallas.
-- `design/app-screens.svg`: los mismos bocetos en formato SVG.
