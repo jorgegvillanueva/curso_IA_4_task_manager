@@ -10,13 +10,15 @@ Stack: React, TypeScript en modo `strict`, Vite y Material UI siguiendo Material
 npm install
 cp .env.example .env   # y rellena VITE_GEMINI_API_KEY
 npm run dev            # servidor de desarrollo
-npm run check          # tipos + lint + formato; debe pasar antes de dar un cambio por cerrado
+npm run check          # tipos + lint + formato + tests; debe pasar antes de dar un cambio por cerrado
+npm run test           # ejecuta los tests una vez
+npm run test:watch     # ejecuta los tests al guardar cambios
 npm run lint:fix       # corrige lo que ESLint puede arreglar solo
 npm run format         # aplica Prettier
 npm run build          # tipos + build de producción en dist/
 ```
 
-- No hay tests ni script `test`. No instales Vitest ni Testing Library ni escribas tests hasta que se pida expresamente; a partir de entonces serán obligatorios.
+- Los tests son obligatorios: cada cambio de lógica lleva sus tests con Vitest, junto al archivo que prueban. Las convenciones están en `.claude/rules/tests.md`.
 - Sin clave de Gemini la app funciona; solo falla la sugerencia con IA, que muestra un mensaje.
 
 ## Ramas y pull requests
