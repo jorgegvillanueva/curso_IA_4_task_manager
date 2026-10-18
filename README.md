@@ -33,6 +33,14 @@ La clave de Gemini queda incluida en el JavaScript compilado: no publiques esa v
 
 `.mcp.json` configura el servidor MCP de GitHub para Claude Code. Necesita la variable de entorno `GITHUB_PAT`, con un token de acceso personal de GitHub. No escribas el token en `.mcp.json`: el archivo está versionado.
 
+## Plugin LSP de TypeScript
+
+`.claude/settings.json` activa el plugin `typescript-lsp` del marketplace oficial de Claude Code. Conecta Claude con un servidor de lenguaje de TypeScript, así que Claude ve los errores de tipos justo después de cada edición y puede ir a la definición de un símbolo o buscar sus referencias. Necesita el servidor instalado globalmente:
+
+```sh
+npm install -g typescript-language-server typescript
+```
+
 ## Documentación
 
 - `docs/app-screens.png`: bocetos de las pantallas.
