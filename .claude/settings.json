@@ -1,4 +1,22 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npm run check)",
+      "Bash(npm run test)",
+      "Bash(npm run format)",
+      "Bash(git status)",
+      "Bash(git diff)",
+      "Bash(git log)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(npm install *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(gh pr merge *)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
